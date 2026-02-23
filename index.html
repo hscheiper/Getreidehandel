@@ -311,7 +311,7 @@
 <script>
   // ── KONFIGURATION ──────────────────────────────────────────────────────────
   // Hier deine Google Apps Script Web-App URL eintragen (nach Deployment):
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwyd9BX_AASDVY970FYh_z9A9e6pEHPXHN7MpsQiGJSyjv39E2rFN7C71RBgzD6I10G/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLjdG8iiYdMbXYFRXtDo32S-t0E-OODrtBg3hUvC1JejngfciLVj9g4VV_b4MwcZuz/exec";
   // ──────────────────────────────────────────────────────────────────────────
 
   const micBtn    = document.getElementById("micBtn");
@@ -388,12 +388,12 @@
     resultDiv.style.display = "none";
 
     try {
-   const res = await fetch(APPS_SCRIPT_URL, {
-  method: "POST",
-  body: JSON.stringify({ text }),
-  headers: { "Content-Type": "text/plain" },
-  redirect: "follow"
-});
+      const url = APPS_SCRIPT_URL + "?text=" + encodeURIComponent(text);
+      const res = await fetch(url, {
+        method: "GET",
+        redirect: "follow"
+      });
+      
       const data = await res.json().catch(() => ({ success: false, error: "Antwort konnte nicht gelesen werden." }));
 
       if (data.success) {
