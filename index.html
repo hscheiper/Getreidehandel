@@ -388,12 +388,13 @@
     resultDiv.style.display = "none";
 
     try {
-    const res = await fetch(APPS_SCRIPT_URL, {
+   const res = await fetch(APPS_SCRIPT_URL, {
   method: "POST",
   body: JSON.stringify({ text }),
-  headers: { "Content-Type": "text/plain" }  // ← "text/plain" statt "application/json"
+  headers: { "Content-Type": "text/plain" },
+  redirect: "follow"
 });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({ success: false, error: "Antwort konnte nicht gelesen werden." }));
 
       if (data.success) {
         showResult(data);
